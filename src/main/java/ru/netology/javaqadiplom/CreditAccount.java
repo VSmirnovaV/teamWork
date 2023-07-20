@@ -25,6 +25,16 @@ public class CreditAccount {
             return false;
         }
     }
+
+     @Override
+    public boolean add(int amount) {
+        if (amount <= 0) {
+            return false;
+        }
+        balance = amount;
+        return true;
+    }
+    
     @Override
     public int yearChange() {
         return balance / 100 * rate;
