@@ -34,33 +34,6 @@ public class CreditAccountTest {
     }
 
     @Test
-    public void shouldDoPay() { // следует сделать покупку
-        CreditAccount account = new CreditAccount(2_000, 5_000, 15);
-
-        account.pay(500);
-
-        Assertions.assertEquals(1500, account.getBalance());
-    }
-
-    @Test
-    public void balanceNotChangeIfAmountNegative() { //следует сделать покупку
-        CreditAccount account = new CreditAccount(1_000, 5_000, 15);
-
-        account.pay(-3_000);
-
-        Assertions.assertEquals(2_000, account.getBalance());
-    }
-
-    @Test
-    public void balanceNotChangeIfAmountZero() { //вызов метода без совершения покупки
-        CreditAccount account = new CreditAccount(1_000, 5_000, 15);
-
-        account.pay(0);
-
-        Assertions.assertEquals(1_000, account.getBalance());
-    }
-
-    @Test
     public void rateZero() { // следует установить ставку 0
         CreditAccount account = new CreditAccount(1_000, 5_000, 0);
 
@@ -68,10 +41,31 @@ public class CreditAccountTest {
     }
 
     @Test
-    public void initialBalanceZero() { //следует установаить начальный баланс - 0
+    public void rate() { // следует установить ставку валидное значение
+        CreditAccount account = new CreditAccount(1_000, 5_000, 15);
+
+        Assertions.assertEquals(15, account.getRate());
+    }
+
+    @Test
+    public void initialBalanceZero() { //следует установить начальный баланс - 0
         CreditAccount account = new CreditAccount(0, 5_000, 15);
 
         Assertions.assertEquals(0, account.getBalance());
+    }
+
+    @Test
+    public void initialNegativeBalance() { //установка начального баланса невалидное значение
+        CreditAccount account = new CreditAccount(-1_000, 5_000, 15);
+
+        Assertions.assertEquals(0, account.getBalance());
+    }
+
+    @Test
+    public void initialBalance() { //установка начального баланса валидное значение
+        CreditAccount account = new CreditAccount(1_000, 5_000, 15);
+
+        Assertions.assertEquals(1000, account.getBalance());
     }
 
     @Test
@@ -87,7 +81,6 @@ public class CreditAccountTest {
 
         Assertions.assertEquals(5_000, account.getCreditLimit());
     }
-
     @Test
     public void creditLimitNegative() { //установка невалидного кредитного лимита
         CreditAccount account = new CreditAccount(1_000, -5_000, 15);
@@ -95,6 +88,22 @@ public class CreditAccountTest {
         Assertions.assertEquals(0, account.getCreditLimit());
     }
 
+    @Test
+    public void balanceNotChangeIfAmountZero() { //вызов метода без совершения покупки
+        CreditAccount account = new CreditAccount(1_000, 5_000, 15);
+
+        account.pay(0);
+
+        Assertions.assertEquals(1_000, account.getBalance());
+    }
+    @Test
+    public void balanceNotChangeIfAmountNegative() { //баланс не должен измениться при отрицательной покупке
+        CreditAccount account = new CreditAccount(1_000, 5_000, 15);
+
+        account.pay(-3_000);
+
+        Assertions.assertEquals(1_000, account.getBalance());
+    }
     @Test
     public void balanceShouldChangeIfAmountPositive() { // следует сделать покупку за счет своих средств
         CreditAccount account = new CreditAccount(2_000, 5_000, 15);
@@ -150,7 +159,7 @@ public class CreditAccountTest {
     }
 
     @Test
-    public void shouldCalculatePercentOnDebt() { //следует рассчитать месячный платеж
+    public void shouldCalculatePercentOnDebt() { //следует рассчитать процент
         CreditAccount account = new CreditAccount(0, 5_000, 15);
 
         account.pay(2_000);
@@ -159,7 +168,7 @@ public class CreditAccountTest {
     }
 
     @Test
-    public void shouldUseInitialBalance() { // следует рассчитать месячный платеж, не используя кредитных средств
+    public void shouldUseInitialBalance() { // следует рассчитать процент, не используя кредитных средств
         CreditAccount account = new CreditAccount(2_000, 5_000, 15);
 
         account.pay(2_000);
@@ -168,7 +177,7 @@ public class CreditAccountTest {
     }
 
     @Test
-    public void shouldUseNotAllInitialBalance() { // следует рассчитать месячный платеж, не используя кредитный лимит и половину собсвтенных средств
+    public void shouldUseNotAllInitialBalance() { // следует рассчитать процент, не используя кредитный лимит и половину собсвтенных средств
         CreditAccount account = new CreditAccount(2_000, 5_000, 15);
 
         account.pay(1_000);
