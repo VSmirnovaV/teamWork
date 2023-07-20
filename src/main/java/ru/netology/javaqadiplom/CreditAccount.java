@@ -1,17 +1,17 @@
 package ru.netology.javaqadiplom;
 
-public class CreditAccount {
+public class CreditAccount extends Account {
     protected int creditLimit;
     public CreditAccount(int initialBalance, int creditLimit, int rate) {
         if (rate <= 0) {
             throw new IllegalArgumentException(
-                    "Накопительная ставка не может быть отрицательной, а у вас: " + rate
-            );
+                    "Накопительная ставка не может быть отрицательной, а у вас: " + rate);
         }
         this.balance = initialBalance;
         this.creditLimit = creditLimit;
         this.rate = rate;
     }
+
     @Override
     public boolean pay(int amount) {
         if (amount <= 0) {
@@ -25,12 +25,15 @@ public class CreditAccount {
             return false;
         }
     }
+
     @Override
     public int yearChange() {
+
         return balance / 100 * rate;
     }
 
     public int getCreditLimit() {
+
         return creditLimit;
     }
 }
