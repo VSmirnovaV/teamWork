@@ -1,4 +1,4 @@
-package ru.netology.javaqadiplom;
+package ru.netology;
 
 import ru.netology.Account;
 
