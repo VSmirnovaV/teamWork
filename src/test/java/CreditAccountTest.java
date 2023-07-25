@@ -34,29 +34,41 @@ public class CreditAccountTest {
     }
 
     @Test
-    public void rateZero() { // следует установить ставку 0
-        CreditAccount account = new CreditAccount(1_000, 5_000, 0);
+    public void shouldThrowExceptionsNegativeRate() { //следует выкинуть исключение при отрицательной ставке
 
-        Assertions.assertEquals(0, account.getRate());
+       Assertions.assertThrows(IllegalArgumentException.class, () -> {
+           CreditAccount account = new CreditAccount(1000,5000,-15);
+      });
+
     }
 
     @Test
-    public void rate() { // следует установить ставку валидное значение
-        CreditAccount account = new CreditAccount(1_000, 5_000, 15);
+    public void shouldThrowExceptionZeroRate() { //следует выкинуть исключение при ставке равной 0
 
-        Assertions.assertEquals(15, account.getRate());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            CreditAccount account = new CreditAccount(1000,5000,0);
+        });
+
+    }
+    @Test
+    public void shouldThrowExceptionsNegativeCreditLimit() { //следует выкинуть исключение при отрицательном кредитном лимите
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            CreditAccount account = new CreditAccount(1000,-5000,15);
+        });
+    }
+
+    @Test
+    public void shouldThrowExceptionsNegativeInitialBalance() { //следует выкинуть исключение при начальном балансе
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            CreditAccount account = new CreditAccount(-1000,5000,15);
+        });
     }
 
     @Test
     public void initialBalanceZero() { //следует установить начальный баланс - 0
         CreditAccount account = new CreditAccount(0, 5_000, 15);
-
-        Assertions.assertEquals(0, account.getBalance());
-    }
-
-    @Test
-    public void initialNegativeBalance() { //установка начального баланса невалидное значение
-        CreditAccount account = new CreditAccount(-1_000, 5_000, 15);
 
         Assertions.assertEquals(0, account.getBalance());
     }
@@ -80,12 +92,6 @@ public class CreditAccountTest {
         CreditAccount account = new CreditAccount(1_000, 5_000, 15);
 
         Assertions.assertEquals(5_000, account.getCreditLimit());
-    }
-    @Test
-    public void creditLimitNegative() { //установка невалидного кредитного лимита
-        CreditAccount account = new CreditAccount(1_000, -5_000, 15);
-
-        Assertions.assertEquals(0, account.getCreditLimit());
     }
 
     @Test
