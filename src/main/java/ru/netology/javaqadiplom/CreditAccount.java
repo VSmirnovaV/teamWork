@@ -2,6 +2,7 @@ package ru.netology.javaqadiplom;
 
 public class CreditAccount extends Account {
     protected int creditLimit;
+
     public CreditAccount(int initialBalance, int creditLimit, int rate) {
         if (rate <= 0) {
             throw new IllegalArgumentException(
@@ -11,6 +12,11 @@ public class CreditAccount extends Account {
         if (initialBalance < 0) {
             throw new IllegalArgumentException(
                     "Начальный баланс не может быть отрицательным, а у вас" + initialBalance
+            );
+        }
+        if (creditLimit < 0) {
+            throw new IllegalArgumentException(
+                    "Кредитный лимит не может быть отрицательным, а у вас" + creditLimit
             );
         }
         this.balance = initialBalance;
@@ -23,9 +29,8 @@ public class CreditAccount extends Account {
         if (amount <= 0) {
             return false;
         }
-        balance = balance - amount;
-        if (balance > -creditLimit) {
-            balance = -amount;
+        if (balance - amount >= -creditLimit) {
+            balance = balance - amount;
             return true;
         } else {
             return false;
@@ -43,8 +48,11 @@ public class CreditAccount extends Account {
 
     @Override
     public int yearChange() {
-
-        return balance / 100 * rate;
+        if (balance < 0) {
+            return balance / 100 * rate;
+        } else {
+            return 0;
+        }
     }
 
     public int getCreditLimit() {
