@@ -1,6 +1,4 @@
-package ru.netology;
-
-import ru.netology.Account;
+package ru.netology.javaqadiplom;
 
 /**
  * Сберегательный счёт
@@ -27,6 +25,42 @@ public class SavingAccount extends Account {
                     "Накопительная ставка не может быть отрицательной, а у вас: " + rate
             );
         }
+
+        if (initialBalance < 0) {
+            throw new IllegalArgumentException(
+                    "Начальный баланс не может быть отрицательным, а у вас: " + initialBalance
+            );
+        }
+
+        if (initialBalance < minBalance) {
+            throw new IllegalArgumentException(
+                    "Начальный баланс не может быть меньше минимального баланса, а у вас:" + (initialBalance < minBalance)
+                    );
+        }
+
+        if (minBalance < 0) {
+            throw new IllegalArgumentException(
+                    "Минимальный баланс не может быть отрицательным, а у вас: " + minBalance
+            );
+        }
+
+        if (maxBalance < 0) {
+            throw new IllegalArgumentException(
+                    "Максимальный баланс не может быть отрицательным, а у вас: " + maxBalance
+            );
+        }
+        if (minBalance >= maxBalance) {
+            throw new IllegalArgumentException(
+                    "Минимальный баланс не может быть больше максимального баланса, а у вас" + (minBalance >= maxBalance)
+            );
+        }
+        if (initialBalance > maxBalance) {
+            throw new IllegalArgumentException(
+                    "Минимальный баланс не может быть больше максимального баланса, а у вас" + (initialBalance > maxBalance)
+            );
+        }
+
+
         this.balance = initialBalance;
         this.minBalance = minBalance;
         this.maxBalance = maxBalance;
@@ -47,11 +81,11 @@ public class SavingAccount extends Account {
         if (amount <= 0) {
             return false;
         }
-        balance = balance - amount;
-        if (balance > minBalance) {
+       if (balance - amount >= minBalance) {
+            balance = balance - amount;
             return true;
         } else {
-            return false;
+           return false;
         }
     }
 
@@ -71,8 +105,8 @@ public class SavingAccount extends Account {
         if (amount <= 0) {
             return false;
         }
-        if (balance + amount < maxBalance) {
-            balance = amount;
+        if (balance + amount <= maxBalance) {
+            balance = amount + balance;
             return true;
         } else {
             return false;

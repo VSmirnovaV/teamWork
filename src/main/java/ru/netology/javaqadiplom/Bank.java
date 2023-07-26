@@ -1,4 +1,4 @@
-package ru.netology;
+package ru.netology.javaqadiplom;
 
 public class Bank {
     public boolean transfer(Account from, Account to, int amount) {

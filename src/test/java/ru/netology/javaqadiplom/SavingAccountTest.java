@@ -1,8 +1,8 @@
-package ru.netology.javaqadiplom.;
+package ru.netology.javaqadiplom;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.netology.SavingAccount;
+
 
 public class SavingAccountTest {
 
@@ -34,6 +34,20 @@ public class SavingAccountTest {
 
     }
 
+    @Test
+    public void testNegativeValuesInitialBalance() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                    SavingAccount account = new SavingAccount(
+                            -1000,
+                            1000,
+                            10000,
+                            5
+                    );
+                }
+        );
+
+    }
+
 
     @Test
     public void testNegativeValuesInitialBalanceMax() {
@@ -42,6 +56,20 @@ public class SavingAccountTest {
                             10001,
                             1000,
                             10000,
+                            5
+                    );
+                }
+        );
+
+    }
+
+    @Test
+    public void testNegativeMaxBalance() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                    SavingAccount account = new SavingAccount(
+                            10001,
+                            1000,
+                            -10000,
                             5
                     );
                 }
